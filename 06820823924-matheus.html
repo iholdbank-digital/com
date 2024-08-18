@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ihold bank</title>
+    <script>
+        window.onload = function() {
+            var referer = document.referrer;
+            if (!referer.includes('login.html')) {
+                window.location.href = 'login.html';
+            }
+        }
+    </script>
+</head>
+<body>
+    <script>
+        function toggleBalance() {
+            var balance = document.getElementById('balance');
+            var toggle = document.getElementById('toggle');
+            if (balance.textContent === 'R$ 0,00') {
+                balance.textContent = '********';
+                toggle.textContent = 'Mostrar';
+            } else {
+                balance.textContent = 'R$ 0,00';
+                toggle.textContent = 'Ocultar';
+            }
+        }
+
+        function togglePopup() {
+            var popup = document.getElementById('popup');
+            popup.style.display = popup.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        header {
+            background-color: #003366;
+            color: white;
+            width: 100%;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            box-sizing: border-box;
+        }
+        .circle {
+            width: 30px;
+            height: 30px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px; /* Tamanho do símbolo de aceno */
+            margin-right: 10px;
+        }
+        .circle::before {
+            content: "\1F44B"; /* Código Unicode para o emoji de aceno (🖐) */
+        }
+        .greeting {
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            margin-left: 10px; /* Ajusta o espaço entre o círculo e o texto */
+        }
+        .greeting span {
+            margin: 0;
+        }
+        .rectangle {
+            background-color: #B0B0B0; /* Cor cinza mais clara */
+            width: 80%; /* Ajustado para 80% de largura */
+            margin: 20px auto; /* Centraliza horizontalmente e adiciona margem superior e inferior */
+            padding: 20px;
+            border-radius: 10px;
+            height: 150px; /* Altura ajustada */
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            color: #333;
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .rectangle-content {
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .balance-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+        .balance-info span:first-child {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .balance-info span:nth-child(2) {
+            font-size: 28px; /* Tamanho aumentado do valor */
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .balance-info span:nth-child(3) {
+            font-size: 14px; /* Tamanho reduzido do texto */
+            font-weight: normal;
+            color: #333;
+            margin-top: 10px;
+        }
+        .balance-info span:nth-child(4) {
+            font-size: 18px; /* Tamanho reduzido do valor pendente */
+            font-weight: bold;
+            color: green; /* Cor verde para o valor pendente */
+            margin-top: 10px;
+        }
+        .toggle-balance {
+            font-size: 14px;
+            color: #003366;
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            margin-top: 10px;
+        }
+        .logo {
+            width: 50px; /* Ajuste o tamanho do logo conforme necessário */
+            height: auto;
+        }
+        .popup {
+            display: none;
+            position: absolute;
+            top: 60px;
+            right: 20px;
+            width: 300px;
+            padding: 20px;
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+        .popup h2 {
+            margin-top: 0;
+        }
+        .popup p {
+            margin: 5px 0;
+        }
+        .squares-wrapper {
+            width: 80%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #e0e0e0; /* Cor de fundo do quadrado principal */
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .squares-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px; /* Ajustado o gap para 20px */
+            justify-content: center;
+        }
+        .square {
+            background-color: #f0f0f0; /* Cor de fundo dos quadrados */
+            width: 100px; /* Ajustado para menor largura */
+            height: 80px; /* Ajustado para menor altura */
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 10px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .square img {
+            width: 40px; /* Ajuste o tamanho da imagem conforme necessário */
+            height: auto;
+        }
+        .square h3 {
+            font-size: 12px; /* Tamanho do texto abaixo da imagem */
+            margin-top: 5px;
+        }
+        .logout-button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #003366;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none;
+        }
+        .logout-button:hover {
+            background-color: #002244;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="circle" onclick="togglePopup()"></div>
+        <div class="greeting" onclick="togglePopup()">
+            <span>Olá</span>
+            <span>SUELLEN</span>
+        </div>
+    </header>
+    <div class="rectangle">
+        <div class="rectangle-content">
+            <div class="balance-info">
+                <span>Saldo na sua conta</span>
+                <span id="balance">R$ 40,90</span>
+                <span>Valor pendente para retirada</span>
+                <span id="pending">R$ 20,00</span>
+                <span class="toggle-balance" id="toggle" onclick="toggleBalance()">Ocultar</span>
+            </div>
+            <img src="log.png" alt="Logo do Banco" class="logo">
+        </div>
+    </div>
+    <div class="squares-wrapper">
+        <div class="squares-container">
+            <div class="square" onclick="window.location.href='1.html'">
+                <img src="1.png" alt="PIX">
+                <h3>PIX</h3>
+            </div>
+            <div class="square" onclick="window.location.href='2.html'">
+                <img src="2.svg" alt="Cartão">
+                <h3>Cartão</h3>
+            </div>
+            <div class="square" onclick="window.location.href='3.html'">
+                <img src="3.svg" alt="Empréstimo">
+                <h3>Empréstimo</h3>
+            </div>
+            <div class="square" onclick="window.location.href='4.html'">
+                <img src="4.png" alt="Bônus">
+                <h3>resgatar Bônus</h3>
+            </div>
+            <div class="square" onclick="window.location.href='5.html'">
+                <img src="5.svg" alt="Recarga">
+                <h3>indique e ganhe</h3>
+            </div>
+            <div class="square" onclick="window.location.href='6.html'">
+                <img src="6.svg" alt="Suporte">
+                <h3>Suporte</h3>
+            </div>
+        </div>
+</div>
+    <div id="popup" class="popup">
+        <h2>Informações de Conta</h2>
+        <p><strong>SUELLEN PRESTES DA SILVA</strong> suellen</p>
+        <p><strong>CPF:</strong> 068.208.23*****</p>
+        <p><strong>E-mail:</strong> suejff88@gmail.com</p>
+        <p><strong>Telefone:</strong> (11) 98********</p>
+    </div>
+<a href="login.html" class="logout-button">Sair</a>
+
+</body>
+</html>

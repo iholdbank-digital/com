@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suporte ao Cliente</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+            background-color: #003366; /* Azul escuro */
+            padding: 10px;
+            display: flex;
+            align-items: center;
+        }
+        header img {
+            height: 40px; /* Ajuste a altura conforme necessário */
+            margin-right: 15px;
+        }
+        .container {
+            flex: 1;
+            padding: 20px;
+        }
+        .tab {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 10px;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            transition: background-color 0.3s;
+        }
+        .tab:hover {
+            background-color: #f1f1f1;
+        }
+        .tab.active {
+            background-color: #003366;
+            color: white;
+        }
+        .tab .arrow {
+            margin-left: auto;
+            border: solid black;
+            border-width: 0 2px 2px 0;
+            display: inline-block;
+            padding: 3px;
+            transform: rotate(45deg);
+        }
+        .content {
+            display: none;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: white;
+            margin-bottom: 10px;
+        }
+        .content.active {
+            display: block;
+        }
+        footer {
+            background-color: #003366;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            position: relative;
+            bottom: 0;
+            width: 95%;
+        }
+        footer img {
+            height: 30px;
+            vertical-align: middle;
+            margin-right: 1px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="section-1.1.png" alt="Logo">
+    </header>
+    <div class="container">
+        <div class="tab" onclick="showContent('ativacao')">
+            Dúvidas sobre Ativação da Conta
+            <i class="arrow"></i>
+        </div>
+        <div id="ativacao" class="content">
+            <h2>Dúvidas sobre Ativação da Conta</h2>
+            <p>Para ativar sua conta, é necessário fazer um depósito mínimo de R$ 20. Este valor será utilizado para validar e liberar todas as funções da sua conta.</p>
+            <p>Após a ativação, você também receberá um limite de crédito de R$ 30, além do valor que você recarregou.</p>
+        </div>
+
+        <div class="tab" onclick="showContent('limite')">
+            Dúvidas sobre Dobrar o Limite em Crédito
+            <i class="arrow"></i>
+        </div>
+        <div id="limite" class="content">
+            <h2>Dúvidas sobre Dobrar o Limite em Crédito</h2>
+            <p>Para dobrar seu limite de crédito, mantenha um bom histórico de pagamentos e utilize os serviços regularmente. Nossa equipe revisará seu perfil periodicamente para ajustar seu limite conforme necessário.</p>
+        </div>
+
+        <div class="tab" onclick="showContent('contatos')">
+            Dúvidas sobre Contatos
+            <i class="arrow"></i>
+        </div>
+        <div id="contatos" class="content">
+            <h2>Dúvidas sobre Contatos</h2>
+            <p>IHOLD BANK CORRESPONDENTE BANCARIO LTDA - CNPJ 37.060.359/0001-64</p>
+            <p>Ouvidoria: (47) 99264-1512 - horário comercial</p>
+            <p>Email: <a href="mailto:comercial@iholdbank.digital">comercial@iholdbank.digital</a></p>
+            <p>Site: <a href="https://www.iholdbank.com" target="_blank">https://iholdbank.digital/</a></p>
+        </div>
+
+        <div class="tab" onclick="showContent('deposito')">
+            Como Funciona o Primeiro Depósito
+            <i class="arrow"></i>
+        </div>
+        <div id="deposito" class="content">
+            <h2>Como Funciona o Primeiro Depósito</h2>
+            <p>Para ativar a sua conta e liberar todas as funções, é necessário fazer um depósito inicial de R$ 20. Após esse depósito, você receberá um limite de crédito de R$ 30 inicial, além do valor que você depositou.</p>
+        </div>
+    </div>
+    <footer>
+        <img src="section-1.1.png" alt="Logo">
+        <div>IHOLD BANK CORRESPONDENTE BANCARIO LTDA - CNPJ 37.060.359/0001-64</div>
+        <div>Ouvidoria: (47) 99264-1512 - horário comercial</div>
+        <div>Email: <a href="mailto:comercial@iholdbank.digital" style="color: white;">comercial@iholdbank.digital</a></div>
+        <div>Site: <a href="https://iholdbank.digital/" target="_blank" style="color: white;">https://iholdbank.digital</a></div>
+    </footer>
+    <script>
+        function showContent(id) {
+            var tabs = document.querySelectorAll('.tab');
+            var contents = document.querySelectorAll('.content');
+            tabs.forEach(function(tab) {
+                tab.classList.remove('active');
+            });
+            contents.forEach(function(content) {
+                content.classList.remove('active');
+            });
+            document.getElementById(id).classList.add('active');
+            document.querySelector('.tab[onclick="showContent(\'' + id + '\')"]').classList.add('active');
+        }
+
+
+    </script>
+</body>
+</html>

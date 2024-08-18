@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logo Piscante</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        #logo {
+            width: 200px; /* Ajuste o tamanho conforme necessário */
+            height: auto;
+            opacity: 1;
+            animation: blink 1.5s steps(2, end) 1;
+        }
+        @keyframes blink {
+            0% { opacity: 1; }
+            25% { opacity: 0; }
+            50% { opacity: 1; }
+            75% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <img id="logo" src="log.png" alt="Logo">
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Redireciona após a animação de piscar
+            setTimeout(function() {
+                window.location.href = 'login.html';
+            }, 1500); // 1500 ms é o tempo total da animação
+        });
+    </script>
+</body>
+</html>

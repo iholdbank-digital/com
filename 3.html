@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificação de Crédito</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+        header {
+            height: 70px; /* Altura do cabeçalho */
+            background: #00274d; /* Azul escuro */
+            color: white;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .logo {
+            width: 60px; /* Ajuste o tamanho conforme necessário */
+            height: auto;
+        }
+        .loading-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+        .loading-container p {
+            font-size: 20px;
+            margin: 15px 0;
+            color: #00274d; /* Azul escuro */
+            border: 2px solid #00274d;
+            border-radius: 8px;
+            padding: 15px;
+            background: #ffffff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .loading-dots {
+            font-size: 36px;
+            color: #00274d; /* Azul escuro */
+            animation: blink 1.5s infinite;
+        }
+        @keyframes blink {
+            0%, 20% { opacity: 1; }
+            50% { opacity: 0; }
+            80%, 100% { opacity: 1; }
+        }
+        .message {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #ffffff;
+            border: 2px solid #00274d; /* Azul escuro */
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            text-align: center;
+            z-index: 1000;
+            max-width: 90%;
+            width: 400px;
+            border-radius: 10px;
+            box-sizing: border-box;
+        }
+        .message p {
+            font-size: 18px;
+            color: #000000; /* Preto forte */
+            margin: 0 0 20px;
+            line-height: 1.5;
+        }
+        .message p strong {
+            color: #d9534f; /* Vermelho para destaque */
+        }
+        .message button {
+            padding: 12px 24px;
+            background-color: #00274d; /* Azul escuro */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        .message button:hover {
+            background-color: #001f3f; /* Azul ainda mais escuro para hover */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="section-1.1.png" alt="Logo" class="logo">
+    </header>
+
+    <div class="loading-container">
+        <p>Por favor, aguarde enquanto verificamos a possibilidade de crédito pessoal</p>
+        <div class="loading-dots">...</div>
+    </div>
+
+    <div class="message" id="message">
+        <p><strong>Verificação Concluída:</strong> Identificamos que você é um novo cliente. No momento, não temos propostas de crédito disponíveis para você. No entanto, recomendamos que explore nossos planos de crédito. Volte em breve para uma nova análise e encontre a melhor oferta adaptada às suas necessidades.</p>
+        <button onclick="goBack()">Voltar</button>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            setTimeout(function() {
+                document.querySelector('.loading-container').style.display = 'none';
+                document.getElementById('message').style.display = 'block';
+            }, 2000);
+        });
+
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>

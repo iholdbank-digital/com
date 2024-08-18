@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ihold bank Login</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: url('section-5.1.png') no-repeat center center fixed;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .header img {
+            height: 40px;
+        }
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+        }
+        .login-form {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 350px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            box-sizing: border-box;
+        }
+        .login-form label {
+            display: block;
+            margin-bottom: 5px;
+            color: #fff;
+            font-weight: bold;
+        }
+        .login-form input[type="text"],
+        .login-form input[type="password"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            color: #fff;
+            font-size: 14px;
+            background-position: 10px center;
+            background-repeat: no-repeat;
+            background-size: 20px;
+            padding-left: 40px;
+            box-sizing: border-box;
+        }
+        .login-form .checkbox-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+        .login-form .checkbox-container label {
+            display: flex;
+            align-items: center;
+        }
+        .login-form button {
+            width: 100%;
+            padding: 10px;
+            background: #0056b3;
+            border: none;
+            border-radius: 20px;
+            color: #fff;
+            font-size: 16px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+        .login-form button:hover {
+            background: #004494;
+        }
+        .login-form .create-account,
+        .login-form .forgot-password {
+            text-align: left;
+            margin-top: 10px;
+        }
+        .login-form .create-account a,
+        .login-form .forgot-password a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 12px;
+        }
+        .login-form .create-account a:hover,
+        .login-form .forgot-password a:hover {
+            text-decoration: underline;
+        }
+        .message-box {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 8px;
+            color: #fff;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+        .message-box p {
+            margin: 0 0 20px;
+        }
+        .message-box button {
+            background: #0056b3;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .message-box button:hover {
+            background: #004494;
+        }
+    </style>
+    <script>
+        function formatCPF(cpf) {
+            cpf = cpf.replace(/\D/g, '').substring(0, 11);  // Limita a 11 dígitos
+            cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2');
+            cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2');
+            cpf = cpf.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+            return cpf;
+        }
+
+        function verificarDados() {
+            var cpf = document.getElementById('cpf').value.replace(/\D/g, '');
+            var senha = document.getElementById('senha').value;
+            var arquivo = cpf + '-' + senha + '.html';
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('HEAD', arquivo, true); // Usar método HEAD para verificar a existência do arquivo sem baixar o conteúdo
+
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    // Se o arquivo existir, redirecionar para o arquivo
+                    window.location.href = arquivo;
+                } else {
+                    // Se o arquivo não existir, mostrar a mensagem de erro
+                    showMessage('Dados não encontrados nos nossos bancos de dados.');
+                }
+            };
+
+            xhr.onerror = function() {
+                // Se ocorrer um erro na requisição, também mostrar a mensagem de erro
+                showMessage('Dados não encontrados nos nossos bancos de dados.');
+            };
+
+            xhr.send();
+        }
+
+        function saveLogin() {
+            var rememberMe = document.getElementById('rememberMe').checked;
+            var cpf = document.getElementById('cpf').value;
+            if (rememberMe) {
+                localStorage.setItem('cpf', cpf);
+            } else {
+                localStorage.removeItem('cpf');
+            }
+        }
+
+        function showMessage(message) {
+            var messageBox = document.getElementById('messageBox');
+            var messageText = document.getElementById('messageText');
+            messageText.textContent = message;
+            messageBox.style.display = 'block';
+        }
+
+        function hideMessage() {
+            var messageBox = document.getElementById('messageBox');
+            messageBox.style.display = 'none';
+        }
+
+        window.onload = function() {
+            var savedCpf = localStorage.getItem('cpf');
+            if (savedCpf) {
+                document.getElementById('cpf').value = savedCpf;
+                document.getElementById('rememberMe').checked = true;
+            }
+
+            document.getElementById('cpf').addEventListener('input', function() {
+                this.value = formatCPF(this.value);
+            });
+
+            document.getElementById('cpf').setAttribute('autocomplete', 'off');
+            document.getElementById('senha').setAttribute('autocomplete', 'off');
+        }
+    </script>
+</head>
+<body>
+    <header class="header">
+        <img src="log.png" alt="Logo">
+    </header>
+    <div class="login-container">
+        <div class="login-form">
+            <form onsubmit="event.preventDefault(); verificarDados(); saveLogin();">
+                <label for="cpf">CPF:</label>
+                <input type="text" id="cpf" name="cpf" required inputmode="numeric" onfocus="this.removeAttribute('readonly');" readonly>
+                <label for="senha">Senha:</label>
+                <input type="password" id="senha" name="senha" required onfocus="this.removeAttribute('readonly');" readonly>
+                <div class="forgot-password">
+                    <a href="recuperar.html">Recuperar senha</a>
+                </div>
+                <div class="checkbox-container">
+                    <label for="rememberMe">
+                        <input type="checkbox" id="rememberMe">
+                        Lembrar login
+                    </label>
+                </div>
+                <button type="submit">Realizar login</button>
+                <div class="create-account">
+                    <a href="1.html">Criar uma conta</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id="messageBox" class="message-box">
+        <p id="messageText"></p>
+        <button onclick="hideMessage()">Ok</button>
+    </div>
+</body>
+</html>
